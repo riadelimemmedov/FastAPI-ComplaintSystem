@@ -16,8 +16,11 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 
-# ? Models and Serializer class
+# ?Models,Serializers,Schemas and Manager class
 from models.user import user
+from models import user, complaint
+from models.enums import RoleType, State
+from schemas.base import BaseComplaint
 
 
 # ?Database properties
@@ -57,3 +60,24 @@ class CustomHTTPBearer(HTTPBearer):
             raise HTTPException(401, "Token is expired")
         except jwt.InvalidTokenError:
             raise HTTPException(401, "Invalid token")
+
+
+oauth2_schema = CustomHTTPBearer()
+
+
+#!is_complainer
+def is_complainer(request: Request):
+    if not request.state.user["role"] == RoleType.complainer:
+        raise HTTPException(403, "Forbidden")
+
+
+#!is_approver
+def is_approver(request: Request):
+    if not request.state.user["role"] == RoleType.approver:
+        raise HTTPException(403, "Forbidden")
+
+
+#!is_admin
+def is_admin(request: Request):
+    if not request.state.user["role"] == RoleType.admin:
+        raise HTTPException(403, "Forbidden")
