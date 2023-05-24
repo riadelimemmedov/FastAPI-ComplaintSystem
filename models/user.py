@@ -28,6 +28,7 @@ user = sqlalchemy.Table(
     sqlalchemy.Column("first_name", sqlalchemy.String(200)),
     sqlalchemy.Column("last_name", sqlalchemy.String(200)),
     sqlalchemy.Column("full_name", sqlalchemy.String(200)),
+    sqlalchemy.Column("phone", sqlalchemy.String(200)),
     sqlalchemy.Column(
         "role",
         sqlalchemy.Enum(RoleType),
