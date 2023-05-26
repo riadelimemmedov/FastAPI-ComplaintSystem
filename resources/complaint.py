@@ -2,17 +2,17 @@
 
 # ?FastApi
 from typing import List
-from fastapi import APIRouter
-from fastapi import FastAPI, Request, Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, EmailStr, SecretStr, validator
+
+from managers.auth import is_admin, is_approver, is_complainer, oauth2_schema
+from managers.complaint import ComplaintManager
 
 # ?Schemas,Models,Manager
 from schemas.request.complaint import ComplaintIn
 from schemas.response.complaint import ComplaintOut
-from managers.auth import oauth2_schema, is_complainer, is_admin
-from managers.complaint import ComplaintManager
-
 
 # De
 
@@ -53,3 +53,23 @@ async def create_complaint(request: Request, complaint: ComplaintIn):
 )
 async def delete_complaint(complaint_id: int):
     await ComplaintManager.delete_complaint(complaint_id)
+
+
+#!approve_complaint
+@router.put(
+    "/complaints/{complaint_id}/approve/",
+    dependencies=[Depends(oauth2_schema), Depends(is_approver)],
+    status_code=204,
+)
+async def approve_complaint(complaint_id: int):
+    await ComplaintManager.approve(complaint_id)
+
+
+#!approve_complaint
+@router.put(
+    "/complaints/{complaint_id}/reject/",
+    dependencies=[Depends(oauth2_schema), Depends(is_approver)],
+    status_code=204,
+)
+async def reject_complaint(complaint_id: int):
+    await ComplaintManager.reject(complaint_id)
