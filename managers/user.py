@@ -3,11 +3,13 @@
 # ?FastApi
 from asyncpg import UniqueViolationError
 from fastapi import FastAPI, HTTPException
+
 # ?Third Party packages for FastApi
 from passlib.context import CryptContext
 
 # ?Database
 from db import database
+
 # ?Models,Serializers and Manager class
 from models import RoleType, user
 
@@ -53,10 +55,13 @@ class UserManager:
     async def get_user_by_email(email):
         return await database.fetch_all(user.select().where(user.c.email == email))
 
-    
     @staticmethod
-    async def change_role(role:RoleType,user_id):
-        existing_user = await database.fetch_one(user.select().where(user.c.id == user_id))
-        print('Existing user is ', existing_user.role)
-        if existing_user.role != 'admin':
-            await database.execute(user.update().where(user.c.id == user_id).values(role=role))
+    async def change_role(role: RoleType, user_id):
+        existing_user = await database.fetch_one(
+            user.select().where(user.c.id == user_id)
+        )
+        print("Existing user is ", existing_user.role)
+        if existing_user.role != "admin":
+            await database.execute(
+                user.update().where(user.c.id == user_id).values(role=role)
+            )

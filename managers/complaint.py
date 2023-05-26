@@ -6,6 +6,7 @@ from db import database
 from models import complaint, user
 from models.enums import RoleType, State
 
+# ?AuthManager
 from .auth import AuthManager
 
 
@@ -33,5 +34,20 @@ class ComplaintManager:
     async def delete_complaint(complaint_id):
         await database.execute(complaint.delete().where(complaint.c.id == complaint_id))
 
-    
-    
+    # approve
+    @staticmethod
+    async def approve(complaint_id):
+        await database.execute(
+            complaint.update()
+            .where(complaint.c.id == complaint_id)
+            .values(status=State.approved)
+        )
+
+    # reject
+    @staticmethod
+    async def reject(complaint_id):
+        await database.execute(
+            complaint.update()
+            .where(complaint.c.id == complaint_id)
+            .values(status=State.rejected)
+        )

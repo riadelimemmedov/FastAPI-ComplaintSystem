@@ -10,6 +10,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, EmailStr, SecretStr, validator
 
+#?UserBase
 from schemas.base import UserBase
 
 
