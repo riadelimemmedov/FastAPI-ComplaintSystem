@@ -325,3 +325,5 @@ archive.zip
 
 migrations
 migrations/
+temp_files/
+upgrade/
