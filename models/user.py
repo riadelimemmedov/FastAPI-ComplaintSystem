@@ -1,17 +1,22 @@
 #
 
 # ?FastApi
+from fastapi import FastAPI, Request, Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from pydantic import BaseModel, EmailStr, SecretStr, validator
+
+
 # ?Third Party packages for FastApi
 import sqlalchemy
-from fastapi import Depends, FastAPI, HTTPException, Request, status
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from pydantic import BaseModel, EmailStr, SecretStr, validator
+
+
+# ? Models and Serializer class
+from .enums import RoleType, State
+
 
 # ?Database properties
 from db import metadata
 
-# ? Models and Serializer class
-from .enums import RoleType, State
 
 #!User
 user = sqlalchemy.Table(
