@@ -13,8 +13,8 @@ from pydantic import BaseModel, EmailStr, SecretStr, validator
 class BaseComplaint(BaseModel):
     title: str
     description: str
+    photo_url: str
     amount: float
-
 
 #!UserBase
 class UserBase(BaseModel):
