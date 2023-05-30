@@ -37,6 +37,7 @@ async def get_complaints(request: Request):
 @router.post(
     "/complaints/",
     dependencies=[Depends(oauth2_schema), Depends(is_complainer)],
+    response_model=ComplaintOut,
     status_code=201,
 )
 async def create_complaint(request: Request, complaint: ComplaintIn):
