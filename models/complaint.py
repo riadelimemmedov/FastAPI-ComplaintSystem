@@ -1,22 +1,17 @@
 #
 
 # ?FastApi
-from fastapi import FastAPI, Request, Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel, EmailStr, SecretStr, validator
-
-
 # ?Third Party packages for FastApi
 import sqlalchemy
-
-
-# ? Models and Serializer class
-from .enums import RoleType, State
-
+from fastapi import Depends, FastAPI, HTTPException, Request, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from pydantic import BaseModel, EmailStr, SecretStr, validator
 
 # ?Database properties
 from db import metadata
 
+# ? Models and Serializer class
+from .enums import RoleType, State
 
 #!Complaint
 complaint = sqlalchemy.Table(
@@ -35,5 +30,9 @@ complaint = sqlalchemy.Table(
     ),
     sqlalchemy.Column(
         "complainer_id", sqlalchemy.ForeignKey("users.id"), nullable=False
+    ),
+    sqlalchemy.Column("encoded_photo", sqlalchemy.Text, nullable=False),
+    sqlalchemy.Column(
+        "extension", sqlalchemy.String(100), nullable=False, server_default="jpeg"
     ),
 )
