@@ -5,7 +5,6 @@ import databases  # Databases gives you simple asyncio support for a range of da
 import sqlalchemy  # A powerful and popular Object-Relational Mapping (ORM) library that supports multiple database backends, including PostgreSQL, MySQL, SQLite, and more.
 from decouple import config
 
-
 #! Postgress Settings
 POSTGRES_HOST = config("POSTGRES_HOST")
 POSTGRES_DB = config("POSTGRES_DB")
