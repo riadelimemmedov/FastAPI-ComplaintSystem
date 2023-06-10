@@ -327,3 +327,4 @@ migrations
 migrations/
 temp_files/
 upgrade/
+d.py
