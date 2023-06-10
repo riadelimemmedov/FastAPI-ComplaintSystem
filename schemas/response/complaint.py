@@ -21,5 +21,5 @@ from schemas.base import BaseComplaint
 # *ComplaintIn
 class ComplaintOut(BaseComplaint):
     id: int
-    created_at: datetime
-    status = State
+    created_at: datetime                   
+    status = State 
